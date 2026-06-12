@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H-AI 여행 상담 카드 — 상품 선택</title>
+<meta name="description" content="하나투어 H-AI 여행 상담 카드 프로토타입 — 상품을 선택하면 AI 카드뉴스가 열립니다.">
+<style>
+  :root{
+    --ht-purple:#5E2BB8; --ht-purple-deep:#47218C; --ht-purple-bg:#F3EFFB; --ht-purple-soft:#E6DDF7;
+    --ht-mint:#08D1D9; --ht-mint-dark:#079DA3; --ht-mint-bg:#E5FAFB;
+    --ink:#1C1430; --ink-sub:#5C5870; --ink-faint:#9B97AB;
+    --line:#ECE9F3; --bg:#F5F4F9;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;display:flex;flex-direction:column;align-items:center;}
+
+  .hero{width:100%;background:linear-gradient(150deg,var(--ht-purple) 0%,var(--ht-purple-deep) 100%);color:#fff;padding:40px 20px 70px;text-align:center;}
+  .hero .logo{font-size:20px;font-weight:800;margin-bottom:14px;}
+  .hero .logo .h{color:var(--ht-mint);}
+  .hero .badge{display:inline-block;background:var(--ht-mint);color:#063A3C;font-size:11px;font-weight:800;padding:5px 14px;border-radius:20px;letter-spacing:.5px;margin-bottom:14px;}
+  .hero h1{font-size:27px;font-weight:800;line-height:1.4;letter-spacing:-.5px;}
+  .hero p{margin-top:10px;font-size:13.5px;color:rgba(255,255,255,.82);line-height:1.6;}
+
+  .list{width:100%;max-width:430px;padding:0 18px;margin-top:-42px;display:flex;flex-direction:column;gap:14px;}
+  .pcard{display:block;text-decoration:none;color:var(--ink);background:#fff;border-radius:18px;padding:18px 18px 16px;box-shadow:0 4px 18px rgba(40,20,90,.12);border:1px solid var(--line);transition:transform .15s, box-shadow .15s;}
+  .pcard:hover{transform:translateY(-2px);box-shadow:0 8px 26px rgba(40,20,90,.18);}
+  .pcard .top{display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+  .src{font-size:10px;font-weight:800;padding:3px 9px;border-radius:10px;}
+  .src.real{background:var(--ht-mint-bg);color:var(--ht-mint-dark);}
+  .src.demo{background:#FEF3E2;color:#B45309;}
+  .pcard .brand{font-size:10px;font-weight:800;color:#fff;background:var(--ht-purple);padding:3px 9px;border-radius:10px;}
+  .pcard .brand.dark{background:#111111;}
+  .pcard h2{font-size:16.5px;font-weight:800;line-height:1.4;margin-bottom:5px;letter-spacing:-.3px;}
+  .pcard .desc{font-size:12px;color:var(--ink-sub);line-height:1.55;margin-bottom:11px;}
+  .pcard .meta{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:13px;}
+  .pcard .chip{font-size:10.5px;color:var(--ink-sub);background:var(--bg);border:1px solid var(--line);padding:3px 9px;border-radius:14px;}
+  .pcard .foot{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--line);padding-top:12px;}
+  .pcard .price{font-size:17px;font-weight:800;}
+  .pcard .price small{font-size:10.5px;font-weight:500;color:var(--ink-faint);margin-left:3px;}
+  .pcard .go{font-size:12.5px;font-weight:800;color:#fff;background:var(--ht-purple);padding:9px 16px;border-radius:20px;}
+  .pcard:hover .go{background:var(--ht-purple-deep);}
+
+  .note{width:100%;max-width:430px;padding:18px 22px 36px;font-size:10.5px;color:var(--ink-faint);line-height:1.7;text-align:center;}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="logo"><span class="h">hana</span>tour</div>
+  <div class="badge">H-AI 여행 상담 카드 · PROTOTYPE</div>
+  <h1>상품 상세를 다 읽기 전,<br>나에게 맞는 여행인지 먼저</h1>
+  <p>상품을 선택하면 AI 상담 카드 7장이 열립니다.<br>좌우로 스와이프해 보세요.</p>
+</div>
+
+<div class="list">
+
+  <a class="pcard" href="aap204.html">
+    <div class="top"><span class="src real">실데이터</span><span class="brand">프리미엄 · 하나팩</span></div>
+    <h2>방콕/파타야 5일 — 노쇼핑 프리미엄</h2>
+    <div class="desc">초특급 호텔 · 코럴아일랜드 요트투어 · 왓아룬 뷰 레스토랑. 쇼핑 없이 여유롭게 도는 구성.</div>
+    <div class="meta"><span class="chip">3박 5일</span><span class="chip">타이비엣젯 직항</span><span class="chip">노옵션 · 노쇼핑</span><span class="chip">후기 ★4.3 (621)</span></div>
+    <div class="foot"><span class="price">1,789,000원~<small>성인 1인</small></span><span class="go">카드 보기 →</span></div>
+  </a>
+
+  <a class="pcard" href="aap206.html">
+    <div class="top"><span class="src real">실데이터</span><span class="brand">세이브</span></div>
+    <h2>방콕/파타야 5일 — 실속 세이브</h2>
+    <div class="desc">100만원 아래로 전 일정 5성 호텔. 담넌사두억 수상시장 · 위험한 기찻길 · 미슐랭 특식.</div>
+    <div class="meta"><span class="chip">3박 5일</span><span class="chip">대한항공 직항</span><span class="chip">쇼핑 3회</span><span class="chip">후기 ★4.8 (98)</span></div>
+    <div class="foot"><span class="price">989,000원~<small>성인 1인</small></span><span class="go">카드 보기 →</span></div>
+  </a>
+
+  <a class="pcard" href="demo20.html">
+    <div class="top"><span class="src demo">데모 · 가상 데이터</span><span class="brand dark">제우스</span></div>
+    <h2>[데모] 남미 5개국 일주 20일</h2>
+    <div class="desc">마추픽추 · 우유니 소금사막 · 이과수 폭포. 장기 일정 히트맵(20일 2단 그리드) 확인용 데모.</div>
+    <div class="meta"><span class="chip">17박 20일</span><span class="chip">국내선 4회 포함</span><span class="chip">버킷리스트</span></div>
+    <div class="foot"><span class="price">12,990,000원~<small>성인 1인</small></span><span class="go">카드 보기 →</span></div>
+  </a>
+
+</div>
+
+<div class="note">
+  H-AI가 상품 데이터를 해석한 참고 정보예요. 예약 전 상품 상세를 꼭 확인하세요.<br>
+  본 페이지는 내부 검토용 프로토타입으로, 가격·일정·별점은 캡처 시점 데이터 또는 샘플 값입니다.
+</div>
+
+</body>
+</html>
