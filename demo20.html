@@ -70,9 +70,13 @@
   .stars{font-size:15px;letter-spacing:2px;color:var(--star);}
   .stars .off{color:var(--star-off);}
   .stars .half{background:linear-gradient(90deg,var(--star) 50%,var(--star-off) 50%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-  .mod-note{margin-top:8px;font-size:10px;color:var(--ink-sub);background:#fff;border:1px dashed var(--ht-purple-soft);border-radius:8px;padding:6px 10px;line-height:1.5;}
-  .mod-note b{color:var(--ht-purple);}
   .fit-comment{margin-top:11px;background:var(--ht-mint-bg);border-left:3px solid var(--ht-mint);border-radius:0 10px 10px 0;padding:11px 13px;font-size:12.5px;line-height:1.6;}
+  .risk-intro{font-size:12px;color:var(--ink-sub);line-height:1.55;margin-bottom:12px;}
+  .risk-row{display:flex;gap:11px;background:#fff7ed;border-radius:12px;padding:13px 14px;margin-bottom:10px;align-items:flex-start;border-left:3px solid #f59e0b;box-shadow:0 1px 4px rgba(40,20,90,.05);}
+  .risk-ico{font-size:16px;line-height:1.3;}
+  .risk-tx{flex:1;}
+  .risk-t{font-size:13.5px;font-weight:700;color:#92400e;margin-bottom:3px;line-height:1.45;}
+  .risk-n{font-size:12px;color:var(--ink-sub);line-height:1.55;}
   .chk-group{background:#fff;border-radius:13px;padding:11px 15px;margin-bottom:9px;box-shadow:0 1px 4px rgba(40,20,90,.06);}
   .chk-group .g-title{font-size:11px;font-weight:800;color:var(--ht-purple);margin-bottom:4px;letter-spacing:.3px;}
   .chk-item{display:flex;gap:9px;padding:4px 0;align-items:baseline;font-size:12.5px;line-height:1.5;}
@@ -194,7 +198,14 @@ const PAYLOAD = {
         friends:'버킷리스트 절경을 한 번에 도는 코스라 친구끼리 도전하기 좋아요. 선택관광 비용은 확인하세요.',
         solo:'평생 한 번의 절경 코스지만 이동이 많아요. 1인 1실 추가요금도 확인하세요.'
       }},
-    { no:5, type:'checkpoints', title:'AI 상품 체크포인트', sub:'비용과 일정 조건, 솔직하게 짚어드려요 💰',
+    { no:5, type:'risks', title:'AI가 짚어주는 솔직한 포인트', sub:'예약 전에 미리 알면 좋은 점이에요 ⚠️',
+      items:[
+        {txt:'전체 17박 20일 장기 일정이에요', note:'체력 안배와 짐 관리가 중요해요'},
+        {txt:'국내선 환승이 4회 포함돼요', note:'이동·대기 시간이 길 수 있어요'},
+        {txt:'마추픽추·우유니 등 고산지대 일정이 있어요', note:'고산 증상 대비가 필요해요'},
+        {txt:'가상 데이터로 만든 데모예요', note:'실제 상품 정보가 아닙니다'}
+      ]},
+    { no:6, type:'checkpoints', title:'AI 상품 체크포인트', sub:'비용과 일정 조건, 솔직하게 짚어드려요 💰',
       groups:[
         {title:'포함', items:[
           {type:'pos', text:'대부분 식사 포함 (현지식·한식 구성)'},
@@ -211,7 +222,7 @@ const PAYLOAD = {
           {type:'attn', text:'가이드·기사 경비 별도 (상세 확인)'}
         ]}
       ]},
-    { no:6, type:'schedule', title:'AI 간단 일정 안내', sub:'일차별 활동량과 준비 팁이에요 👟',
+    { no:7, type:'schedule', title:'AI 간단 일정 안내', sub:'일차별 활동량과 준비 팁이에요 👟',
       days:[
         {d:1,  route:'인천 출발 → 리마 도착 (경유)', grade:'low', msg:'이동이 긴 날이에요. 기내에서 편히 쉬어가세요.'},
         {d:2,  route:'리마 구시가지 · 아르마스 광장', grade:'mid', msg:'포토 스팟이 많은 날이에요. 마음에 드는 옷을 준비해 보세요!'},
@@ -273,6 +284,8 @@ function head(c){ return `<div class="card-no">CARD ${c.no}</div><div class="car
 function slideHtml(c){
   const m = PAYLOAD.meta;
   switch(c.type){
+    case 'risks':
+      return `<div class="slide">${head(c)}<div class="risk-intro">좋은 점만 모은 게 아니에요. AI가 데이터에서 함께 살펴봤어요.</div>${c.items.map(r=>`<div class="risk-row"><div class="risk-ico">⚠️</div><div class="risk-tx"><div class="risk-t">${r.txt}</div>${r.note?`<div class="risk-n">${r.note}</div>`:''}</div></div>`).join('')}</div>`;
     case 'qa':
       return `<div class="slide">${head(c)}${c.items.map(i=>`<div class="qa-item"><div class="qa-q">${i.q}</div><div class="qa-a">${i.a}</div></div>`).join('')}</div>`;
     case 'main':
@@ -317,14 +330,12 @@ function endSlide(){
 function renderFit(){
   const c = PAYLOAD.cards.find(x=>x.type==='fit');
   const fit = fitScore(c.attrs01, comp, c.mods);
-  const mod = c.mods[comp];
   const label = COMPANIONS.find(x=>x.key===comp).label;
   document.getElementById('fitBody').innerHTML =
     `<div class="comp-tabs">${COMPANIONS.map(x=>`<button class="${x.key===comp?'on':''}" onclick="setComp('${x.key}')">${x.label}</button>`).join('')}</div>
      <div class="fit-score"><span class="num">★${fit.toFixed(1)}<small> /5</small></span><span class="lbl">${FIT_LABEL(fit)}</span><span class="cap">${label} 여행 기준<br>종합 FIT</span></div>
      <div class="star-box">${TAB_ATTRS[comp].map(a=>
        `<div class="star-row"><span class="attr">${a.label}<button class="info-btn" onclick="toggleTip(event,'${a.k}')">i</button><span class="tip" id="tip-${a.k}">${c.tips[a.k]}</span></span><span class="stars">${stars(dispStar(c.attrs01[a.k]))}</span></div>`).join('')}</div>
-     <div class="mod-note"><b>${label} 보정 ${mod.v>=0?'+':''}${mod.v.toFixed(2)}</b> · ${mod.why}</div>
      <div class="fit-comment">${c.comments[comp]}</div>`;
 }
 function setComp(k){ comp=k; renderFit(); }
@@ -357,6 +368,7 @@ vp.innerHTML = PAYLOAD.cards.map(slideHtml).join('') + endSlide();
 renderFit();
 renderHm();
 document.getElementById('dots').innerHTML = Array.from({length:TOTAL},(_,i)=>`<span class="dot${i===0?' on':''}" onclick="go(${i})"></span>`).join('');
+document.getElementById('counter').textContent = '1 / '+TOTAL;
 
 function sync(){
   document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on', i===idx));

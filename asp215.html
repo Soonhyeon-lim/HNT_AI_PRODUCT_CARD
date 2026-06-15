@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>H-AI 카드뉴스 [실데이터] — AAP206260715KE9 방콕/파타야 5일 (세이브)</title>
+<title>H-AI 카드뉴스 [실데이터] — ASP215260923KE2 싱가포르 5일 (프리미엄)</title>
 <!--
-  ★ 실데이터 기반 카드뉴스 (캡처: 2026-04-13, hanatour_pkg_api_request_response_AAP206260715KE9.md)
-  - 가격·항공·후기·특징태그(쇼핑3회/가이드경비 USD50/선택관광있음) = 실제 관측값
+  ★ 실데이터 기반 카드뉴스 (캡처: 2026-04-02, hanatour_pkg_api_request_response_AAP204260402VZA.md)
+  - 가격·항공·해시태그·선택관광·후기 = 실제 API 응답값
   - 속성 별점 = 기획서 6장 산출식 v1 적용 (산출 근거 툴팁 표기)
-  - AAP204(프리미엄)와의 변별 검증용 비교쌍
+  - 일차별 동선 = smplSchdCont(방콕1-파타야2-방콕1) + 상품명/해시태그 POI 기반 (일정표 상세 미캡처 — 보수 구성)
 -->
 <style>
   :root{
@@ -50,7 +50,7 @@
   .info-row .ic{font-size:13px;}
   .s-main .price{margin-top:13px;font-size:22px;font-weight:800;color:var(--ink);}
   .s-main .price small{font-size:11px;font-weight:500;color:var(--ink-faint);margin-left:6px;}
-  .price-note{font-size:10.5px;color:var(--ht-mint-dark);margin-top:4px;font-weight:600;}
+  .price-note{font-size:10.5px;color:var(--warn);margin-top:4px;font-weight:600;}
   .tag-row{display:flex;flex-wrap:wrap;gap:5px;margin:-4px 0 12px;}
   .tag{font-size:10.5px;font-weight:600;color:var(--ht-mint-dark);background:var(--ht-mint-bg);padding:3px 9px;border-radius:12px;}
   .hl-item{display:flex;gap:11px;background:#fff;border-radius:12px;padding:10px 13px;margin-bottom:8px;align-items:flex-start;box-shadow:0 1px 4px rgba(40,20,90,.06);}
@@ -154,99 +154,103 @@
 </div>
 
 <script>
-/* ───────── 실데이터 페이로드 — AAP206260715KE9 (캡처 2026-04-13) ───────── */
+/* ───────── 실데이터 페이로드 — AAP204260402VZA (캡처 2026-04-02) ───────── */
 const PAYLOAD = {
-  productCode: 'AAP206260715KE9',
-  dataVersion: '2026-04-13 capture',
+  productCode: 'ASP215260923KE2',
+  dataVersion: '2026-06-15 capture',
   meta: {
-    shortName: '방콕/파타야 5일 (세이브)',
-    name: '방콕/파타야 5일 #담넌사두억수상시장 #위험한기찻길 #코럴아일랜드투어 #하나투어전용비치 #빅부다 #전일정5성호텔 #미슐랭레스토랑',
-    brand: '세이브', brandColor: '#5E2BB8',
+    shortName: '싱가포르 5일 (프리미엄)',
+    name: '싱가포르 5일 #1일자유 #플라이어 #2층버스 #리버보트 #가든스바이더베이 #만다린오리엔탈뷔페 #5성호텔+마리나베이샌즈',
+    brand: '하나팩2.0 프리미엄', brandColor: '#5E2BB8',
     duration: '3박 5일',
-    dates: '2026.7.15(수) ~ 2026.7.19(일)',
+    dates: '2026.9.23(수) ~ 2026.9.27(일)',
     flights: {
-      out: '가는 편 · 인천 19:45 출발 (KE0659 · 대한항공 직항)',
-      in: '오는 편 · 방콕 → 인천 05:05 도착 (KE0658)'
+      out: '가는 편 · 인천 13:50 출발 → 싱가포르 19:15 도착 (KE0643 · 대한항공 직항)',
+      in: '오는 편 · 싱가포르 22:00 출발 → 인천 익일 05:35 도착 (KE0644)'
     },
-    price: {amount: '989,000', verified: true, basis: '성인 1인 기준'},
-    priceNote: '유류할증료 246,000원 포함 · 5개월 무이자 시 월 197,800원',
-    review: {avg: 4.8, count: 98, key: 'MAA1425'}
+    price: {amount: '5,569,900', verified: true, basis: '성인 1인 기준'},
+    priceNote: '유류할증료 411,000원 포함 · 5개월 무이자 시 월 1,113,980원'
   },
   cards: [
     { no:1, type:'qa', title:'AI 상품 Q&A', sub:'상세를 읽기 전 가장 궁금한 것부터 알려드려요 💬',
       items:[
-        {q:'이 상품은 뭐가 다른가요?', a:'100만원 아래로 전 일정 5성 호텔에 묵는 실속형이에요.'},
-        {q:'어떤 장면이 남을까요?', a:'담넌사두억 수상시장과 위험한 기찻길이에요.'},
-        {q:'식사는 어떤 편인가요?', a:'미슐랭 레스토랑 특식이 포함돼요.'},
-        {q:'쇼핑 부담은 없나요?', a:'쇼핑센터 3회 방문이 있는 일정이에요.'},
-        {q:'추가 비용 부담은요?', a:'가이드 경비 USD 50과 선택관광이 별도예요.'}
+        {q:'이 상품은 뭐가 다른가요?', a:'쇼핑·옵션·가이드경비가 없는 하나팩2.0 프리미엄이에요. 추가경비 부담이 거의 없어요.'},
+        {q:'어떤 장면이 남을까요?', a:'마리나베이샌즈 57층 인피니티풀과 가든스 바이 더 베이 야경이에요.'},
+        {q:'자유시간은 있나요?', a:'3일차가 전일 자유일정이라 원하는 대로 보낼 수 있어요.'},
+        {q:'선택관광 부담은 없나요?', a:'플라이어·2층버스·리버보트가 이미 포함이라 추가 옵션 권유가 없어요.'},
+        {q:'식사는 어떤 편인가요?', a:'만다린 오리엔탈 뷔페 등 미식 위주예요. 단, 3일차 석식은 불포함이에요.'}
       ]},
     { no:2, type:'main', title:'상품 메인 정보', sub:'이 여행을 한 줄로 말하면 ✨',
-      hook:'100만원 아래,<br><span class="mint">5성 호텔</span>의 방콕·파타야'},
+      hook:'쇼핑·옵션 없이,<br><span class="mint">마리나베이샌즈</span>의 싱가포르'},
     { no:3, type:'highlights', title:'AI 상품 핵심포인트', sub:'AI가 이 상품의 핵심이라 판단한 정보예요 📌',
-      tags:['#여유로운파타야','#방콕파타야여행','#담넌사두억수상시장','#코럴아일랜드투어','#전일정5성호텔','#미슐랭레스토랑'],
+      tags:['#프리미엄싱가포르여행','#마리나베이샌즈','#5성호텔','#싱가포르플라이어','#버드파라다이스','#가든스바이더베이','#리버보트','#미식여행'],
       items:[
-        {label:'핵심', txt:'전 일정 5성급 호텔 · 실속 가격 (98.9만원)'},
-        {label:'관광지', txt:'담넌사두억 수상시장 · 위험한 기찻길'},
-        {label:'관광지', txt:'코럴아일랜드 투어 · 하나투어 전용 비치 · 빅부다'},
-        {label:'맛집', txt:'미슐랭 레스토랑 특식'},
-        {label:'핵심', txt:'여행자 보험 1억원 가입'}
+        {label:'핵심', txt:'5성급 2박 + 마리나베이샌즈 1박 (57층 인피니티풀)'},
+        {label:'핵심', txt:'노쇼핑·노옵션·가이드경비 포함 — 추가경비 부담 제로'},
+        {label:'자유', txt:'3일차 전일 자유일정 (세미팩)'},
+        {label:'관광', txt:'가든스 바이 더 베이 2돔 · 버드파라다이스 · 머라이언'},
+        {label:'관광', txt:'플라이어 · 2층버스 · 리버보트 선택관광 사전 포함'},
+        {label:'맛집', txt:'만다린 오리엔탈 뷔페 · 펭귄코브 뷔페 · 딤섬'}
       ]},
     { no:4, type:'fit', title:'AI FIT', sub:'동행에 따라 적합도를 계산해드려요 🧭',
-      attrs01:{hotel:.70, meal:.45, leisure:.05, move:.50, photo:.70, cost:.40},
+      attrs01:{hotel:.92, meal:.78, leisure:.72, move:.72, photo:.85, cost:.92},
       mods:{
-        family:{v:-.08, why:'심야 항공 -0.05 · 쇼핑 3회 -0.03'},
-        parents:{v:-.02, why:'미슐랭 특식 +0.03 · 심야 항공 -0.05'},
-        couple:{v:0, why:'수상시장·전용 비치 +0.03 · 쇼핑 3회 -0.03'},
-        friends:{v:.04, why:'코럴아일랜드·비치 액티비티 +0.04'},
-        solo:{v:-.06, why:'단체 쇼핑 일정 -0.06'}
+        family:{v:.03, why:'자유일정+미식 +0.03'},
+        parents:{v:.00, why:'5성·노옵션 편의 +0.04 · 심야 귀국 -0.04'},
+        couple:{v:.10, why:'마리나베이샌즈 인피니티풀·야경 +0.06 · 미식 +0.04'},
+        friends:{v:.06, why:'시티투어·미식·자유일정 +0.06'},
+        solo:{v:-.03, why:'노옵션 자유 +0.03 · 1인 1실 130만원 -0.06'}
       },
       tips:{
-        hotel:'5성 등급 0.50 + 전 일정 동일 0.10 + 전일정5성호텔 태그 0.10. 연박 정보는 미확보예요.',
-        meal:'미슐랭 특식 1회 +0.10. 포함 식사 수는 미확보라 중립(0.35) 처리 — 일정표에서 확인하세요.',
-        leisure:'자유일정 없음에 쇼핑 3회 -0.15 — 일정 여유가 가장 낮은 항목이에요.',
-        move:'직항 +0.10, 심야 출발 -0.05 · 새벽 도착 -0.05 · 방콕-파타야 이동 -0.10.',
-        photo:'포토 스팟 5곳 0.60 + 전용 비치 +0.05 + 수상시장 체험 +0.05.',
-        cost:'쇼핑 3회 -0.30 · 선택관광 별도 -0.15 · 가이드 경비 USD 50 -0.15.'
+        hotel:'5성급 2박 + 마리나베이샌즈 1박(57층 인피니티풀). 일부 호텔 예정 상태라 확정 가점은 제외.',
+        meal:'만다린오리엔탈 뷔페·펭귄코브 뷔페 등 특식 포함 +0.25. 단, 3일차 석식은 불포함(자유일정).',
+        leisure:'3일차 전일 자유일정 +0.15 · 세미팩(1~2일 자유) +0.05 · 노쇼핑 +0.10.',
+        move:'대한항공 직항 +0.10 · 단일 도시(싱가포르) 이동 적음 +0.10 · 귀국편 심야 출발 -0.10.',
+        photo:'마리나베이샌즈 인피니티풀·가든스 슈퍼트리·플라이어·머라이언 등 포토 스팟 다수.',
+        cost:'노쇼핑·노옵션·가이드경비 포함(추가경비 없음, 기본 1.0) · 유류할증료 별도 -0.05 · 1인 1실 추가요금 별도.'
       },
       comments:{
-        family:'가격 부담은 낮지만 쇼핑 3회와 새벽 도착 항공은 가족 일정에 감안하세요.',
-        parents:'5성 숙박에 미슐랭 특식까지 좋아요. 심야 항공과 쇼핑 일정은 확인하세요.',
-        couple:'수상시장·전용 비치 등 사진 코스는 좋아요. 자유시간은 적은 편이에요.',
-        friends:'실속 가격으로 5성 호텔을 즐겨요. 현지 추가 비용은 미리 계산해 보세요.',
-        solo:'가격은 매력적이지만 쇼핑·단체 일정 중심이라 혼자 여행엔 확인이 필요해요.'
+        family:'쇼핑·옵션 없이 5성 호텔과 자유일정이 있어 가족 페이스에 맞추기 좋아요.',
+        parents:'가이드 경비까지 포함이라 추가 부담이 적어요. 귀국편이 심야인 점은 감안하세요.',
+        couple:'마리나베이샌즈 인피니티풀과 야경으로 둘만의 장면을 남기기 좋아요.',
+        friends:'플라이어·2층버스·리버보트에 미식까지, 함께 즐길 거리가 많아요.',
+        solo:'노옵션이라 자유롭지만 1인 1실 추가요금(130만원)은 확인하세요.'
       }},
     { no:5, type:'risks', title:'AI가 짚어주는 솔직한 포인트', sub:'예약 전에 미리 알면 좋은 점이에요 ⚠️',
       items:[
-        {txt:'쇼핑센터 방문이 3회 있어요', note:'구매 의무는 없지만 일정 시간이 소요돼요'},
-        {txt:'가이드 경비 USD 50가 별도예요', note:'현지에서 별도로 준비하세요'},
-        {txt:'귀국편이 심야 출발이에요', note:'마지막 날 늦게까지 일정 후 새벽 도착(05:05)'},
-        {txt:'선택관광이 별도로 있어요', note:'원치 않으면 자유시간으로 활용 가능'}
+        {txt:'귀국편이 심야 출발이에요', note:'9/26 밤 22:00 출발해 9/27 새벽 05:35 도착해요. 다음 날은 여유 있게.'},
+        {txt:'3일차 석식은 불포함이에요', note:'전일 자유일정이라 저녁은 직접 정하시면 돼요.'},
+        {txt:'1인 1실은 130만원 추가예요', note:'혼자 가시면 객실 추가요금을 확인하세요.'},
+        {txt:'싱가포르는 전자담배 반입이 금지예요', note:'소지만 해도 압수·벌금이 있어요. 절대 가져가지 마세요.'},
+        {txt:'선발권 특가라 취소 규정을 확인하세요', note:'발권 후엔 출발 30일 이전 취소에도 항공사 취소료가 있어요.'}
       ]},
     { no:6, type:'checkpoints', title:'AI 상품 체크포인트', sub:'비용과 일정 조건, 솔직하게 짚어드려요 💰',
       groups:[
         {title:'포함', items:[
-          {type:'pos', text:'유류할증료 246,000원 포함'},
-          {type:'pos', text:'미슐랭 레스토랑 특식 · 여행자 보험 1억원'}
+          {type:'pos', text:'왕복 직항 항공권 (대한항공) · 전용 차량'},
+          {type:'pos', text:'5성급 2박 + 마리나베이샌즈 1박'},
+          {type:'pos', text:'선택관광 사전 포함 — 플라이어·2층버스·리버보트'},
+          {type:'pos', text:'3억원 여행자보험'}
         ]},
         {title:'불포함', items:[
-          {type:'attn', text:'1인 1실 추가요금 별도 (상품가 기준 확인)'}
+          {type:'attn', text:'개인 경비 · 매너팁(자율)'},
+          {type:'attn', text:'3일차 석식 (자유일정)'}
         ]},
         {title:'선택경비', items:[
-          {type:'attn', text:'선택관광 참여 시 별도 비용'},
-          {type:'attn', text:'쇼핑센터 3회 방문 일정'}
+          {type:'pos', text:'노옵션 · 노쇼핑 — 별도 선택경비 없음'},
+          {type:'attn', text:'객실 1인 사용료 1,300,000원'}
         ]},
         {title:'가이드 · 기사', items:[
-          {type:'attn', text:'가이드 경비 USD 50 (현지 지불)'}
+          {type:'pos', text:'가이드 · 기사 경비 상품가 포함'}
         ]}
       ]},
     { no:7, type:'schedule', title:'AI 간단 일정 안내', sub:'일차별 활동량과 준비 팁이에요 👟',
       days:[
-        {d:1, route:'인천 19:45 출발 → 방콕 도착 (심야)', grade:'low', msg:'늦은 밤 도착이에요. 기내에서 미리 쉬어두세요.'},
-        {d:2, route:'담넌사두억 수상시장 · 위험한 기찻길 → 파타야', grade:'high', msg:'걸음이 많은 날이에요. 편한 운동화를 추천드려요!'},
-        {d:3, route:'코럴아일랜드 투어 · 하나투어 전용 비치', grade:'high', msg:'야외 일정이 긴 날이에요. 선크림과 편한 차림을 추천드려요!'},
-        {d:4, route:'빅부다 → 방콕 · 쇼핑센터 → 심야 출발', grade:'mid', msg:'저녁 늦게 출발해요. 여유 있게 짐을 챙겨두세요.'},
-        {d:5, route:'인천 05:05 도착', grade:'low', msg:''}
+        {d:1, route:'인천 13:50 출발 → 싱가포르 19:15 도착 (싱가포르 1박)', grade:'low', msg:'늦은 저녁 도착이에요. 첫날은 가볍게 쉬어가세요.'},
+        {d:2, route:'가든스 바이 더 베이 · 버드파라다이스 · 펭귄코브 뷔페 · 가든 랩소디 쇼', grade:'high', msg:'야외 일정이 많은 날이에요. 가벼운 옷차림과 우산을 챙기세요.'},
+        {d:3, route:'전일 자유일정 · 마리나베이샌즈 투숙(57층 인피니티풀)', grade:'free', msg:'정해진 일정이 없는 날이에요. 인피니티풀과 미식을 즐겨보세요!'},
+        {d:4, route:'싱가포르 플라이어 · 2층버스 시티투어 · 리버보트 · 머라이언파크 → 심야 출발', grade:'high', msg:'걸음이 많은 날이에요. 밤 비행 전 짐을 미리 챙겨두세요.'},
+        {d:5, route:'인천 05:35 도착', grade:'low', msg:'이른 새벽 도착이에요. 도착 후 일정은 여유 있게 잡으세요.'}
       ]}
   ]
 };
@@ -301,7 +305,7 @@ function slideHtml(c){
         <div class="info-row"><span class="ic">📅</span><span>${m.dates}</span></div>
         <div class="info-row"><span class="ic">✈️</span><span>${m.flights.out}<br>${m.flights.in}</span></div>
         <div class="price">${m.price.amount}원~ <small>${m.price.basis}</small></div>
-        ${m.priceNote?`<div class="price-note">✓ ${m.priceNote}</div>`:''}</div></div>`;
+        ${m.priceNote?`<div class="price-note">! ${m.priceNote}</div>`:''}</div></div>`;
     case 'highlights':
       return `<div class="slide">${head(c)}
         <div class="tag-row">${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
@@ -330,7 +334,7 @@ function endSlide(){
   return `<div class="slide s-end">
     <div class="logo"><span class="h">hana</span>tour</div>
     <div class="slogan">꿈꾸는 대로, 펼쳐지다</div>
-    <div class="notice"><b>H-AI가 상품 데이터를 해석한 참고 정보예요.</b><br>예약 전 상품 상세를 꼭 확인하세요.<br><br>별점·FIT은 상품 데이터 기반 산출값으로<br>개인 만족도와 다를 수 있어요.<br>활동량은 일정 구성 기반 추정이며,<br>호텔·일정·경비는 변경될 수 있어요.<br><br>* 실제 API 캡처 데이터(2026.4.13) 기반 샘플이에요.</div>
+    <div class="notice"><b>H-AI가 상품 데이터를 해석한 참고 정보예요.</b><br>예약 전 상품 상세를 꼭 확인하세요.<br><br>별점·FIT은 상품 데이터 기반 산출값으로<br>개인 만족도와 다를 수 있어요.<br>활동량은 일정 구성 기반 추정이며,<br>호텔·일정·경비는 변경될 수 있어요.<br><br>* 실제 API 캡처 데이터(2026.4.2) 기반 샘플이에요.</div>
     <a class="cta" href="#" onclick="return false;">상품 상세 보기</a></div>`;
 }
 
@@ -344,8 +348,7 @@ function renderFit(){
      <div class="fit-score"><span class="num">★${fit.toFixed(1)}<small> /5</small></span><span class="lbl">${FIT_LABEL(fit)}</span><span class="cap">${label} 여행 기준<br>종합 FIT</span></div>
      <div class="star-box">${TAB_ATTRS[comp].map(a=>
        `<div class="star-row"><span class="attr">${a.label}<button class="info-btn" onclick="toggleTip(event,'${a.k}')">i</button><span class="tip" id="tip-${a.k}">${c.tips[a.k]}</span></span><span class="stars">${stars(dispStar(c.attrs01[a.k]))}</span></div>`).join('')}</div>
-     <div class="fit-comment">${c.comments[comp]}</div>
-     <div class="rv-note">실제 여행자 후기 ★${m.review.avg} · ${m.review.count}건 (방콕/파타야 시리즈 기준)</div>`;
+     <div class="fit-comment">${c.comments[comp]}</div>`;
 }
 function setComp(k){ comp=k; renderFit(); }
 

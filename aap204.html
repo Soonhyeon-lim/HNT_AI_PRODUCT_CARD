@@ -76,9 +76,13 @@
   .stars{font-size:15px;letter-spacing:2px;color:var(--star);}
   .stars .off{color:var(--star-off);}
   .stars .half{background:linear-gradient(90deg,var(--star) 50%,var(--star-off) 50%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
-  .mod-note{margin-top:8px;font-size:10px;color:var(--ink-sub);background:#fff;border:1px dashed var(--ht-purple-soft);border-radius:8px;padding:6px 10px;line-height:1.5;}
-  .mod-note b{color:var(--ht-purple);}
   .fit-comment{margin-top:11px;background:var(--ht-mint-bg);border-left:3px solid var(--ht-mint);border-radius:0 10px 10px 0;padding:11px 13px;font-size:12.5px;line-height:1.6;}
+  .risk-intro{font-size:12px;color:var(--ink-sub);line-height:1.55;margin-bottom:12px;}
+  .risk-row{display:flex;gap:11px;background:#fff7ed;border-radius:12px;padding:13px 14px;margin-bottom:10px;align-items:flex-start;border-left:3px solid #f59e0b;box-shadow:0 1px 4px rgba(40,20,90,.05);}
+  .risk-ico{font-size:16px;line-height:1.3;}
+  .risk-tx{flex:1;}
+  .risk-t{font-size:13.5px;font-weight:700;color:#92400e;margin-bottom:3px;line-height:1.45;}
+  .risk-n{font-size:12px;color:var(--ink-sub);line-height:1.55;}
   .rv-note{margin-top:8px;font-size:10.5px;color:var(--ink-faint);text-align:right;}
   .chk-group{background:#fff;border-radius:13px;padding:11px 15px;margin-bottom:9px;box-shadow:0 1px 4px rgba(40,20,90,.06);}
   .chk-group .g-title{font-size:11px;font-weight:800;color:var(--ht-purple);margin-bottom:4px;letter-spacing:.3px;}
@@ -212,7 +216,14 @@ const PAYLOAD = {
         friends:'요트·마사지·씨푸드 뷔페까지 즐길 거리가 고르게 있어요.',
         solo:'노옵션이라 일정 강요 없이 자유 시간이 일부 있어요. 1인 1실 28만원은 확인하세요.'
       }},
-    { no:5, type:'checkpoints', title:'AI 상품 체크포인트', sub:'비용과 일정 조건, 솔직하게 짚어드려요 💰',
+    { no:5, type:'risks', title:'AI가 짚어주는 솔직한 포인트', sub:'예약 전에 미리 알면 좋은 점이에요 ⚠️',
+      items:[
+        {txt:'귀국편이 이른 아침 출발이에요', note:'마지막 날은 전날 미리 짐을 챙겨두면 편해요'},
+        {txt:'유류할증료가 별도예요', note:'외국 항공사라 결제 시 따로 청구돼요'},
+        {txt:'방콕↔파타야 이동이 2회 있어요', note:'편도 약 2시간, 이동 중 휴식을 추천해요'},
+        {txt:'종일 자유일정은 없는 편이에요', note:'일정이 알찬 대신 휴식 시간은 짧아요'}
+      ]},
+    { no:6, type:'checkpoints', title:'AI 상품 체크포인트', sub:'비용과 일정 조건, 솔직하게 짚어드려요 💰',
       groups:[
         {title:'포함', items:[
           {type:'pos', text:'인기 선택관광 포함 — 타이전통마사지 2시간 (하나팩2.0)'},
@@ -229,7 +240,7 @@ const PAYLOAD = {
           {type:'pos', text:'가이드 경비 없음 (상품 특징 태그 확인)'}
         ]}
       ]},
-    { no:6, type:'schedule', title:'AI 간단 일정 안내', sub:'일차별 활동량과 준비 팁이에요 👟',
+    { no:7, type:'schedule', title:'AI 간단 일정 안내', sub:'일차별 활동량과 준비 팁이에요 👟',
       days:[
         {d:1, route:'인천 12:10 출발 → 방콕 16:00 도착 (방콕 1박)', grade:'low', msg:'이동이 긴 날이에요. 기내에서 편히 쉬어가세요.'},
         {d:2, route:'방콕 → 파타야 · 진리의 성전', grade:'mid', msg:'포토 스팟이 많은 날이에요. 마음에 드는 옷을 준비해 보세요!'},
@@ -279,6 +290,8 @@ function head(c){ return `<div class="card-no">CARD ${c.no}</div><div class="car
 function slideHtml(c){
   const m = PAYLOAD.meta;
   switch(c.type){
+    case 'risks':
+      return `<div class="slide">${head(c)}<div class="risk-intro">좋은 점만 모은 게 아니에요. AI가 데이터에서 함께 살펴봤어요.</div>${c.items.map(r=>`<div class="risk-row"><div class="risk-ico">⚠️</div><div class="risk-tx"><div class="risk-t">${r.txt}</div>${r.note?`<div class="risk-n">${r.note}</div>`:''}</div></div>`).join('')}</div>`;
     case 'qa':
       return `<div class="slide">${head(c)}${c.items.map(i=>`<div class="qa-item"><div class="qa-q">${i.q}</div><div class="qa-a">${i.a}</div></div>`).join('')}</div>`;
     case 'main':
@@ -325,14 +338,12 @@ function renderFit(){
   const c = PAYLOAD.cards.find(x=>x.type==='fit');
   const m = PAYLOAD.meta;
   const fit = fitScore(c.attrs01, comp, c.mods);
-  const mod = c.mods[comp];
   const label = COMPANIONS.find(x=>x.key===comp).label;
   document.getElementById('fitBody').innerHTML =
     `<div class="comp-tabs">${COMPANIONS.map(x=>`<button class="${x.key===comp?'on':''}" onclick="setComp('${x.key}')">${x.label}</button>`).join('')}</div>
      <div class="fit-score"><span class="num">★${fit.toFixed(1)}<small> /5</small></span><span class="lbl">${FIT_LABEL(fit)}</span><span class="cap">${label} 여행 기준<br>종합 FIT</span></div>
      <div class="star-box">${TAB_ATTRS[comp].map(a=>
        `<div class="star-row"><span class="attr">${a.label}<button class="info-btn" onclick="toggleTip(event,'${a.k}')">i</button><span class="tip" id="tip-${a.k}">${c.tips[a.k]}</span></span><span class="stars">${stars(dispStar(c.attrs01[a.k]))}</span></div>`).join('')}</div>
-     <div class="mod-note"><b>${label} 보정 ${mod.v>=0?'+':''}${mod.v.toFixed(2)}</b> · ${mod.why}</div>
      <div class="fit-comment">${c.comments[comp]}</div>
      <div class="rv-note">실제 여행자 후기 ★${m.review.avg} · ${m.review.count}건 (방콕/파타야 시리즈 기준)</div>`;
 }
@@ -366,6 +377,7 @@ vp.innerHTML = PAYLOAD.cards.map(slideHtml).join('') + endSlide();
 renderFit();
 renderHm();
 document.getElementById('dots').innerHTML = Array.from({length:TOTAL},(_,i)=>`<span class="dot${i===0?' on':''}" onclick="go(${i})"></span>`).join('');
+document.getElementById('counter').textContent = '1 / '+TOTAL;
 
 function sync(){
   document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on', i===idx));
