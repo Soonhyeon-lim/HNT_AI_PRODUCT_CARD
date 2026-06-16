@@ -10,6 +10,7 @@
   - 속성 별점 = 기획서 6장 산출식 v1 적용 (산출 근거 툴팁 표기)
   - 일차별 동선 = smplSchdCont(방콕1-파타야2-방콕1) + 상품명/해시태그 POI 기반 (일정표 상세 미캡처 — 보수 구성)
 -->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
 <style>
   :root{
     --ht-purple:#5E2BB8; --ht-purple-deep:#47218C; --ht-purple-bg:#F3EFFB; --ht-purple-soft:#E6DDF7;
@@ -21,7 +22,7 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   html,body{height:100%;}
-  body{font-family:'Pretendard','Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#E9E7F0;color:var(--ink);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px 0;}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#E9E7F0;color:var(--ink);display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px 0;}
   .stage{position:relative;}
   .frame{width:390px;background:#fff;border-radius:24px;overflow:hidden;box-shadow:0 10px 44px rgba(40,20,90,.25);border:1px solid #D9D5E5;}
   .topbar{height:48px;background:linear-gradient(135deg,var(--ht-purple),var(--ht-purple-deep));color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 16px;}
@@ -137,6 +138,8 @@
   .nav.prev{left:-52px;}
   .nav.next{right:-52px;}
   @media (max-width:520px){ .nav{display:none;} }
+  .rv-note{font-size:10px;color:#9B97AB;text-align:right;margin-top:8px;}
+  .tip{left:0;right:0;width:auto;z-index:60;}
 </style>
 </head>
 <body>
@@ -202,12 +205,12 @@ const PAYLOAD = {
         solo:{v:-.02, why:'2인 출발 기준·조인 플레이 -0.02'}
       },
       tips:{
-        hotel:'골프장 내 골프텔(모던·깔끔) · 수영장·GYM·15시 레이트체크아웃. 호텔 예정 상태라 확정 가점은 제외.',
-        meal:'조·중·석식 전 일정 포함 +0.20 · 클럽하우스 한식당 중·석식 +0.05.',
-        leisure:'3일 연속 라운드로 일정은 빡빡한 편 · 골프텔 휴식·레이트체크아웃 +0.05.',
-        move:'티웨이 직항 +0.10 · 골프장 내 숙박(도보 이동) +0.10 · 귀국편 새벽 출발 -0.10.',
-        photo:'골프리조트·수영장 뷰 위주. 관광 포토 스팟은 적은 편.',
-        cost:'LCC·노쇼핑이지만 전동카(THB800)·캐디피(THB400)·캐디팁(THB400)·미팅샌딩(USD50)이 현지 별도.'
+        hotel:'골프장 안 골프텔이라 이동 없이 편하고, 수영장·GYM에 15시 레이트 체크아웃까지 제공돼요. 호텔은 예정 상태예요.',
+        meal:'조·중·석식 전 일정이 포함되고, 중·석식은 클럽하우스 한식당에서 즐길 수 있어요.',
+        leisure:'3일 연속 라운드라 일정은 빡빡한 편이지만, 골프텔 휴식과 레이트 체크아웃으로 숨통이 트여요.',
+        move:'티웨이 직항에 골프장 안에서 묵어 도보 이동이라 편해요. 다만 귀국편이 새벽 출발이에요.',
+        photo:'골프리조트와 수영장 뷰 위주라, 관광 포토 스팟은 적은 편이에요.',
+        cost:'LCC에 노쇼핑이지만 전동카·캐디피·캐디팁과 공항 미팅샌딩비가 현지에서 별도로 들어요.'
       },
       comments:{
         family:'골프 중심 일정이에요. 골프를 함께 즐기는 가족이라면 좋아요.',

@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>H-AI 카드뉴스 — 싱가포르 5일 (프리미엄) · Boarding Pass</title>
+<!--
+  ★ 실데이터 기반 카드뉴스 (캡처: 2026-04-02, hanatour_pkg_api_request_response_AAP204260402VZA.md)
+  - 가격·항공·해시태그·선택관광·후기 = 실제 API 응답값
+  - 속성 별점 = 기획서 6장 산출식 v1 적용 (산출 근거 툴팁 표기)
+  - 일차별 동선 = smplSchdCont(방콕1-파타야2-방콕1) + 상품명/해시태그 POI 기반 (일정표 상세 미캡처 — 보수 구성)
+-->
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<style>
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{height:100%;}
+  body{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;background:#c2c8cf;color:#14233b;display:flex;align-items:center;justify-content:center;min-height:100vh;padding:16px 0;}
+  .stage{position:relative;}
+  .frame{width:390px;background:#f6f7f4;border-radius:18px;overflow:hidden;box-shadow:0 12px 40px rgba(20,35,59,.22);border:1px solid #c7ccc4;}
+  .topbar{height:54px;background:#14233b;color:#eef2f7;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .topbar .logo{font-size:12px;font-weight:700;letter-spacing:1px;}
+  .topbar .logo .h{color:#7fd0c0;}
+  .topbar .counter{font-size:11px;font-weight:700;background:rgba(127,208,192,.18);color:#7fd0c0;padding:3px 10px;border-radius:4px;}
+  .viewport{width:390px;height:634px;overflow-x:auto;overflow-y:hidden;display:flex;scroll-snap-type:x mandatory;scrollbar-width:none;background:#eceee9;}
+  .viewport::-webkit-scrollbar{display:none;}
+  .slide{flex:0 0 390px;height:634px;scroll-snap-align:center;padding:22px 22px;display:flex;flex-direction:column;overflow:hidden;background:#f6f7f4;}
+  .card-no{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:11px;font-weight:700;color:#2f8f7c;letter-spacing:1px;margin-bottom:8px;}
+  .card-title{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:21px;font-weight:700;color:#14233b;margin-bottom:5px;line-height:1.2;letter-spacing:-.5px;}
+  .card-sub{font-size:12px;color:#5a6b85;margin-bottom:14px;border-bottom:1.5px dashed #cdd3cb;padding-bottom:12px;}
+  .qa-item{background:transparent;border-bottom:1.5px dashed #d6dad3;padding:13px 0;box-shadow:none;}
+  .qa-q{font-size:13px;font-weight:700;color:#14233b;margin-bottom:4px;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .qa-q::before{content:'Q. ';color:#2f8f7c;}
+  .qa-a{font-size:12.5px;line-height:1.55;color:#46566a;}
+  .s-main .hook{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:23px;font-weight:700;line-height:1.35;color:#14233b;margin:6px 0 18px;letter-spacing:-1px;}
+  .s-main .hook .mint{color:#2f8f7c;}
+  .main-box{background:#fff;border:1.5px dashed #cdd3cb;border-radius:10px;padding:16px;box-shadow:none;}
+  .s-main .main-name{font-size:12.5px;font-weight:400;line-height:1.55;color:#46566a;margin-bottom:12px;}
+  .meta-row{display:flex;gap:6px;flex-wrap:wrap;}
+  .meta-chip{font-size:11px;background:#eef1ee;border:1px solid #d6dad3;color:#46566a;padding:5px 11px;border-radius:4px;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .meta-chip.brand{color:#eef2f7;font-weight:700;background:#14233b;border-color:#14233b;}
+  .info-row{display:flex;gap:8px;font-size:12px;color:#46566a;margin-top:10px;line-height:1.55;align-items:flex-start;}
+  .info-row .ic{font-size:13px;}
+  .s-main .price{margin-top:14px;font-size:22px;font-weight:700;color:#14233b;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .s-main .price small{font-size:11px;font-weight:400;color:#7a8290;margin-left:6px;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .price-note{font-size:10.5px;color:#b4502e;margin-top:4px;font-weight:600;}
+  .tag-row{display:flex;flex-wrap:wrap;gap:5px;margin:-2px 0 12px;}
+  .tag{font-size:10.5px;font-weight:700;color:#2f8f7c;background:#e3f1ee;padding:3px 9px;border-radius:4px;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .hl-item{display:flex;gap:11px;background:transparent;border-bottom:1.5px dashed #d6dad3;padding:12px 0;align-items:flex-start;box-shadow:none;}
+  .hl-item .num{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:12px;font-weight:700;color:#2f8f7c;min-width:22px;padding-top:2px;}
+  .hl-body{flex:1;}
+  .hl-label{display:inline-block;font-size:9.5px;font-weight:700;color:#14233b;background:#e3f1ee;padding:2px 8px;border-radius:4px;margin-bottom:4px;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;letter-spacing:.5px;}
+  .hl-body .txt{font-size:13px;line-height:1.45;color:#23303f;}
+  .comp-tabs{display:flex;gap:5px;margin-bottom:12px;}
+  .comp-tabs button{flex:1;padding:8px 0;font-size:11px;border:1.5px dashed #cdd3cb;border-radius:4px;background:#fff;color:#5a6b85;cursor:pointer;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .comp-tabs button.on{background:#14233b;border-color:#14233b;border-style:solid;color:#7fd0c0;font-weight:700;}
+  .fit-score{display:flex;align-items:center;gap:12px;background:#14233b;color:#eef2f7;border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:none;}
+  .fit-score .num{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:27px;font-weight:700;color:#7fd0c0;}
+  .fit-score .num small{font-size:13px;color:#8fa0b5;font-weight:400;}
+  .fit-score .lbl{font-size:12px;font-weight:700;color:#14233b;background:#7fd0c0;padding:5px 11px;border-radius:4px;}
+  .fit-score .cap{font-size:10.5px;color:#aab8c9;margin-left:auto;text-align:right;line-height:1.4;}
+  .star-box{background:#fff;border:1.5px dashed #cdd3cb;border-radius:10px;padding:7px 16px;box-shadow:none;}
+  .star-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-top:1.5px dashed #e0e3dd;position:relative;}
+  .star-row:first-child{border-top:none;}
+  .star-row .attr{font-size:13.5px;display:flex;align-items:center;gap:6px;color:#23303f;}
+  .info-btn{width:15px;height:15px;border-radius:50%;background:#eef1ee;color:#7a8290;font-size:10px;font-weight:700;border:1px solid #d6dad3;cursor:pointer;line-height:12px;text-align:center;font-style:normal;}
+  .tip{position:absolute;left:0;top:30px;z-index:6;background:#14233b;color:#eef2f7;font-size:10.5px;line-height:1.55;padding:8px 11px;border-radius:6px;width:250px;box-shadow:0 4px 14px rgba(0,0,0,.3);display:none;}
+  .tip.show{display:block;}
+  .stars{font-size:15px;letter-spacing:2px;color:#2f8f7c;}
+  .stars .off{color:#cdd3cb;}
+  .stars .half{background:linear-gradient(90deg,#2f8f7c 50%,#cdd3cb 50%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+  .fit-comment{margin-top:12px;background:#e3f1ee;border:1.5px dashed #a9d5cb;border-left:1.5px dashed #a9d5cb;border-radius:8px;padding:11px 13px;font-size:12.5px;line-height:1.6;color:#23303f;}
+  .risk-intro{font-size:12px;color:#5a6b85;line-height:1.55;margin-bottom:12px;}
+  .risk-row{display:flex;gap:11px;background:#fff;border:1.5px dashed #e3c08f;border-left:1.5px dashed #e3c08f;border-radius:8px;padding:12px 14px;margin-bottom:9px;align-items:flex-start;box-shadow:none;}
+  .risk-ico{font-size:15px;line-height:1.3;}
+  .risk-tx{flex:1;}
+  .risk-t{font-size:13px;font-weight:700;color:#92400e;margin-bottom:3px;line-height:1.45;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;}
+  .risk-n{font-size:12px;color:#5a6b85;line-height:1.55;}
+  .chk-group{background:#fff;border:1.5px dashed #cdd3cb;border-radius:8px;padding:11px 15px;margin-bottom:9px;box-shadow:none;}
+  .chk-group .g-title{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:11px;font-weight:700;color:#14233b;margin-bottom:5px;letter-spacing:.5px;}
+  .chk-item{display:flex;gap:9px;padding:4px 0;align-items:baseline;font-size:12.5px;line-height:1.5;color:#23303f;}
+  .chk-item .ico{font-size:11px;font-weight:700;min-width:14px;text-align:center;}
+  .chk-item.pos .ico{color:#2f8f7c;}
+  .chk-item.attn .ico{color:#b4502e;}
+  .free-note{display:flex;justify-content:flex-end;align-items:center;gap:5px;font-size:9.5px;color:#7a8290;margin-bottom:5px;}
+  .legend{display:flex;gap:7px;margin-bottom:10px;}
+  .leg{flex:1;background:#fff;border:1.5px dashed #cdd3cb;border-radius:8px;padding:8px 4px;text-align:center;box-shadow:none;}
+  .leg .steps{font-size:10px;color:#5a6b85;font-weight:600;}
+  .legend-note{font-size:9.5px;color:#7a8290;text-align:right;margin:-6px 0 8px;}
+  .day-list{background:#fff;border:1.5px dashed #cdd3cb;border-radius:10px;padding:5px 14px;box-shadow:none;}
+  .day-row{display:flex;gap:10px;padding:11px 0;border-top:1.5px dashed #e0e3dd;align-items:flex-start;}
+  .day-row:first-child{border-top:none;}
+  .day-col{min-width:48px;text-align:center;padding-top:1px;}
+  .day-col .d{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:11.5px;font-weight:700;color:#14233b;}
+  .grade{display:inline-block;font-size:9px;font-weight:700;padding:2px 7px;border-radius:4px;}
+  .day-col .grade{margin-top:3px;}
+  .grade.low{background:#e3f1ee;color:#2f6f63;}
+  .grade.mid{background:#e7ecf2;color:#3a5275;}
+  .grade.high{background:#f7e4d2;color:#b4502e;}
+  .grade.free{background:#14233b;color:#7fd0c0;}
+  .day-body{flex:1;min-width:0;}
+  .day-route{font-size:12px;font-weight:600;line-height:1.4;color:#23303f;}
+  .day-msg{font-size:10px;color:#2f8f7c;line-height:1.45;margin-top:1px;}
+  .hm-bar{display:grid;gap:4px;margin-bottom:12px;}
+  .hm-cell{cursor:pointer;min-width:0;}
+  .hm-cell .blk{height:34px;border-radius:6px;display:flex;align-items:center;justify-content:center;border:2px solid transparent;font-size:10px;font-weight:700;}
+  .blk.low{background:#cfe9e2;color:#2f6f63;}
+  .blk.mid{background:#d7e0ec;color:#3a5275;}
+  .blk.high{background:#f3d3b6;color:#b4502e;}
+  .blk.free{background:#14233b;color:#7fd0c0;}
+  .hm-cell.sel .blk{border-color:#14233b;}
+  .hm-detail{background:#fff;border:1.5px dashed #cdd3cb;border-radius:10px;padding:15px 16px;box-shadow:none;min-height:118px;}
+  .hm-day{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:12px;font-weight:700;color:#14233b;display:flex;align-items:center;gap:8px;margin-bottom:7px;}
+  .hm-route{font-size:13.5px;font-weight:600;line-height:1.5;color:#23303f;}
+  .hm-msg{font-size:11.5px;color:#2f8f7c;margin-top:7px;line-height:1.55;}
+  .hm-hint{font-size:10px;color:#7a8290;text-align:center;margin-top:9px;}
+  .slide.s-end{justify-content:center;align-items:center;text-align:center;}
+  .s-end .logo{font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:23px;font-weight:700;color:#14233b;margin-bottom:8px;letter-spacing:-.5px;}
+  .s-end .logo .h{color:#2f8f7c;}
+  .s-end .slogan{font-size:13px;color:#5a6b85;margin-bottom:26px;}
+  .s-end .notice{font-size:13px;line-height:1.9;color:#5a6b85;margin-bottom:30px;padding:0 8px;}
+  .s-end .notice b{color:#14233b;font-weight:700;}
+  .s-end .cta{display:inline-block;background:#14233b;color:#7fd0c0;font-family:'Pretendard',-apple-system,BlinkMacSystemFont,system-ui,'Apple SD Gothic Neo','Malgun Gothic',sans-serif;font-size:14px;font-weight:700;padding:14px 40px;border-radius:6px;text-decoration:none;letter-spacing:1px;}
+  .dots{height:40px;display:flex;align-items:center;justify-content:center;gap:7px;background:#f6f7f4;border-top:1.5px dashed #d6dad3;}
+  .dot{width:7px;height:7px;border-radius:50%;background:#cdd3cb;cursor:pointer;transition:all .2s;}
+  .dot.on{width:20px;border-radius:3px;background:#14233b;}
+  .nav{position:absolute;top:50%;transform:translateY(-50%);width:38px;height:38px;border-radius:50%;border:none;background:#14233b;color:#7fd0c0;font-size:16px;font-weight:700;cursor:pointer;box-shadow:0 2px 10px rgba(20,35,59,.3);}
+  .nav.prev{left:-52px;}
+  .nav.next{right:-52px;}
+  @media (max-width:520px){ .nav{display:none;} }
+
+  .topbar a{color:#eef2f7 !important;background:rgba(127,208,192,.22) !important;}
+  .rv-note{font-size:10px;color:#7a8290;text-align:right;margin-top:8px;}
+  .tip{left:0;right:0;width:auto;z-index:60;}
+  .topbar.bp-head{height:auto;flex-direction:column;align-items:stretch;gap:7px;padding:11px 18px 13px;}
+  .bp-row1{display:flex;align-items:center;justify-content:space-between;}
+  .bp-head .logo{font-size:12px;font-weight:700;letter-spacing:1px;color:#eef2f7;}
+  .bp-head .logo .h{color:#7fd0c0;}
+  .bp-actions{display:flex;align-items:center;gap:8px;}
+  .bp-list{color:#eef2f7 !important;background:rgba(127,208,192,.2) !important;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none;}
+  .bp-head .counter{font-size:11px;font-weight:700;background:rgba(127,208,192,.18);color:#7fd0c0;padding:3px 10px;border-radius:4px;}
+  .bp-row2{display:flex;align-items:center;gap:9px;}
+  .bp-port{font-size:21px;font-weight:800;color:#fff;letter-spacing:1px;}
+  .bp-line{color:#7fd0c0;font-size:13px;}
+  .bp-flight{margin-left:auto;font-size:10px;color:#aab8c9;letter-spacing:.3px;text-align:right;line-height:1.3;}
+  .bp-tear{height:16px;position:relative;background:radial-gradient(circle 9px at 0% 50%, #c2c8cf 9px, transparent 10px), radial-gradient(circle 9px at 100% 50%, #c2c8cf 9px, transparent 10px), #14233b;}
+  .bp-dash{position:absolute;left:18px;right:18px;top:50%;transform:translateY(-50%);border-top:2px dashed #5a6b85;}
+  .viewport{height:600px;}
+  .slide{height:600px;}
+  .bp-foot{position:relative;border-top:2px dashed #d6dad3;padding:11px 0 5px;background:radial-gradient(circle 9px at 0% 0%, #c2c8cf 9px, transparent 10px), radial-gradient(circle 9px at 100% 0%, #c2c8cf 9px, transparent 10px), #f6f7f4;}
+  .barcode{height:28px;margin:0 22px 8px;background:repeating-linear-gradient(90deg,#14233b 0 2px,transparent 2px 3px,#14233b 3px 5px,transparent 5px 8px,#14233b 8px 9px,transparent 9px 11px,#14233b 11px 14px,transparent 14px 16px);}
+  .bp-foot .dots{border-top:none;background:transparent;height:auto;}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="frame">
+    <div class="topbar bp-head">
+      <div class="bp-row1">
+        <div class="logo">✈ <span class="h">H-AI</span> BOARDING PASS</div>
+        <span class="bp-actions"><a href="index.html" class="bp-list">목록</a><span class="counter" id="counter">01 / 08</span></span>
+      </div>
+      <div class="bp-row2">
+        <span class="bp-port">ICN</span><span class="bp-line">✈</span><span class="bp-port">SIN</span>
+        <span class="bp-flight">KE0643 · 2026.09.23 · 싱가포르 5일</span>
+      </div>
+    </div>
+    <div class="bp-tear"><span class="bp-dash"></span></div>
+    <div class="viewport" id="vp"></div>
+    <div class="bp-foot">
+      <div class="barcode"></div>
+      <div class="dots" id="dots"></div>
+    </div>
+  </div>
+  <button class="nav prev" onclick="go(idx-1)">‹</button>
+  <button class="nav next" onclick="go(idx+1)">›</button>
+</div>
+
+<script>
+/* ───────── 실데이터 페이로드 — AAP204260402VZA (캡처 2026-04-02) ───────── */
+const PAYLOAD = {
+  productCode: 'ASP215260923KE2',
+  dataVersion: '2026-06-15 capture',
+  meta: {
+    shortName: '싱가포르 5일 (프리미엄)',
+    name: '싱가포르 5일 #1일자유 #플라이어 #2층버스 #리버보트 #가든스바이더베이 #만다린오리엔탈뷔페 #5성호텔+마리나베이샌즈',
+    brand: '하나팩2.0 프리미엄', brandColor: '#5E2BB8',
+    duration: '3박 5일',
+    dates: '2026.9.23(수) ~ 2026.9.27(일)',
+    flights: {
+      out: '가는 편 · 인천 13:50 출발 → 싱가포르 19:15 도착 (KE0643 · 대한항공 직항)',
+      in: '오는 편 · 싱가포르 22:00 출발 → 인천 익일 05:35 도착 (KE0644)'
+    },
+    price: {amount: '5,569,900', verified: true, basis: '성인 1인 기준'},
+    priceNote: '유류할증료 411,000원 포함 · 5개월 무이자 시 월 1,113,980원'
+  },
+  cards: [
+    { no:1, type:'qa', title:'AI 상품 Q&A', sub:'상세를 읽기 전 가장 궁금한 것부터 알려드려요 💬',
+      items:[
+        {q:'이 상품은 뭐가 다른가요?', a:'쇼핑·옵션·가이드경비가 없는 하나팩2.0 프리미엄이에요. 추가경비 부담이 거의 없어요.'},
+        {q:'어떤 장면이 남을까요?', a:'마리나베이샌즈 57층 인피니티풀과 가든스 바이 더 베이 야경이에요.'},
+        {q:'자유시간은 있나요?', a:'3일차가 전일 자유일정이라 원하는 대로 보낼 수 있어요.'},
+        {q:'선택관광 부담은 없나요?', a:'플라이어·2층버스·리버보트가 이미 포함이라 추가 옵션 권유가 없어요.'},
+        {q:'식사는 어떤 편인가요?', a:'만다린 오리엔탈 뷔페 등 미식 위주예요. 단, 3일차 석식은 불포함이에요.'}
+      ]},
+    { no:2, type:'main', title:'상품 메인 정보', sub:'이 여행을 한 줄로 말하면 ✨',
+      hook:'쇼핑·옵션 없이,<br><span class="mint">마리나베이샌즈</span>의 싱가포르'},
+    { no:3, type:'highlights', title:'AI 상품 핵심포인트', sub:'AI가 이 상품의 핵심이라 판단한 정보예요 📌',
+      tags:['#프리미엄싱가포르여행','#마리나베이샌즈','#5성호텔','#싱가포르플라이어','#버드파라다이스','#가든스바이더베이','#리버보트','#미식여행'],
+      items:[
+        {label:'핵심', txt:'5성급 2박 + 마리나베이샌즈 1박 (57층 인피니티풀)'},
+        {label:'핵심', txt:'노쇼핑·노옵션·가이드경비 포함 — 추가경비 부담 제로'},
+        {label:'자유', txt:'3일차 전일 자유일정 (세미팩)'},
+        {label:'관광', txt:'가든스 바이 더 베이 2돔 · 버드파라다이스 · 머라이언'},
+        {label:'관광', txt:'플라이어 · 2층버스 · 리버보트 선택관광 사전 포함'},
+        {label:'맛집', txt:'만다린 오리엔탈 뷔페 · 펭귄코브 뷔페 · 딤섬'}
+      ]},
+    { no:4, type:'fit', title:'AI FIT', sub:'동행에 따라 적합도를 계산해드려요 🧭',
+      attrs01:{hotel:.92, meal:.78, leisure:.72, move:.72, photo:.85, cost:.92},
+      mods:{
+        family:{v:.03, why:'자유일정+미식 +0.03'},
+        parents:{v:.00, why:'5성·노옵션 편의 +0.04 · 심야 귀국 -0.04'},
+        couple:{v:.10, why:'마리나베이샌즈 인피니티풀·야경 +0.06 · 미식 +0.04'},
+        friends:{v:.06, why:'시티투어·미식·자유일정 +0.06'},
+        solo:{v:-.03, why:'노옵션 자유 +0.03 · 1인 1실 130만원 -0.06'}
+      },
+      tips:{
+        hotel:'5성급 2박에 마리나베이샌즈 1박(57층 인피니티풀)까지 더해 숙소가 특히 강점이에요. 일부 호텔은 예정 상태예요.',
+        meal:'만다린 오리엔탈 뷔페, 펭귄코브 뷔페 등 미식 구성이 좋아요. 다만 3일차 석식은 자유일정이라 불포함이에요.',
+        leisure:'3일차 전일 자유일정에 세미팩 구성, 노쇼핑까지 더해 여유로운 편이에요.',
+        move:'대한항공 직항에 싱가포르 단일 도시라 이동이 적어요. 다만 귀국편이 심야 출발이에요.',
+        photo:'마리나베이샌즈 인피니티풀, 가든스 슈퍼트리, 플라이어, 머라이언 등 포토 스팟이 많아요.',
+        cost:'쇼핑·옵션·가이드경비가 없어 추가비용 부담이 거의 없어요. 유류할증료와 1인 1실 요금만 별도예요.'
+      },
+      comments:{
+        family:'쇼핑·옵션 없이 5성 호텔과 자유일정이 있어 가족 페이스에 맞추기 좋아요.',
+        parents:'가이드 경비까지 포함이라 추가 부담이 적어요. 귀국편이 심야인 점은 감안하세요.',
+        couple:'마리나베이샌즈 인피니티풀과 야경으로 둘만의 장면을 남기기 좋아요.',
+        friends:'플라이어·2층버스·리버보트에 미식까지, 함께 즐길 거리가 많아요.',
+        solo:'노옵션이라 자유롭지만 1인 1실 추가요금(130만원)은 확인하세요.'
+      }},
+    { no:5, type:'risks', title:'AI가 짚어주는 솔직한 포인트', sub:'예약 전에 미리 알면 좋은 점이에요 ⚠️',
+      items:[
+        {txt:'귀국편이 심야 출발이에요', note:'9/26 밤 22:00 출발해 9/27 새벽 05:35 도착해요. 다음 날은 여유 있게.'},
+        {txt:'3일차 석식은 불포함이에요', note:'전일 자유일정이라 저녁은 직접 정하시면 돼요.'},
+        {txt:'1인 1실은 130만원 추가예요', note:'혼자 가시면 객실 추가요금을 확인하세요.'},
+        {txt:'싱가포르는 전자담배 반입이 금지예요', note:'소지만 해도 압수·벌금이 있어요. 절대 가져가지 마세요.'},
+        {txt:'선발권 특가라 취소 규정을 확인하세요', note:'발권 후엔 출발 30일 이전 취소에도 항공사 취소료가 있어요.'}
+      ]},
+    { no:6, type:'checkpoints', title:'AI 상품 체크포인트', sub:'비용과 일정 조건, 솔직하게 짚어드려요 💰',
+      groups:[
+        {title:'포함', items:[
+          {type:'pos', text:'왕복 직항 항공권 (대한항공) · 전용 차량'},
+          {type:'pos', text:'5성급 2박 + 마리나베이샌즈 1박'},
+          {type:'pos', text:'선택관광 사전 포함 — 플라이어·2층버스·리버보트'},
+          {type:'pos', text:'3억원 여행자보험'}
+        ]},
+        {title:'불포함', items:[
+          {type:'attn', text:'개인 경비 · 매너팁(자율)'},
+          {type:'attn', text:'3일차 석식 (자유일정)'}
+        ]},
+        {title:'선택경비', items:[
+          {type:'pos', text:'노옵션 · 노쇼핑 — 별도 선택경비 없음'},
+          {type:'attn', text:'객실 1인 사용료 1,300,000원'}
+        ]},
+        {title:'가이드 · 기사', items:[
+          {type:'pos', text:'가이드 · 기사 경비 상품가 포함'}
+        ]}
+      ]},
+    { no:7, type:'schedule', title:'AI 간단 일정 안내', sub:'일차별 활동량과 준비 팁이에요 👟',
+      days:[
+        {d:1, route:'인천 13:50 출발 → 싱가포르 19:15 도착 (싱가포르 1박)', grade:'low', msg:'늦은 저녁 도착이에요. 첫날은 가볍게 쉬어가세요.'},
+        {d:2, route:'가든스 바이 더 베이 · 버드파라다이스 · 펭귄코브 뷔페 · 가든 랩소디 쇼', grade:'high', msg:'야외 일정이 많은 날이에요. 가벼운 옷차림과 우산을 챙기세요.'},
+        {d:3, route:'전일 자유일정 · 마리나베이샌즈 투숙(57층 인피니티풀)', grade:'free', msg:'정해진 일정이 없는 날이에요. 인피니티풀과 미식을 즐겨보세요!'},
+        {d:4, route:'싱가포르 플라이어 · 2층버스 시티투어 · 리버보트 · 머라이언파크 → 심야 출발', grade:'high', msg:'걸음이 많은 날이에요. 밤 비행 전 짐을 미리 챙겨두세요.'},
+        {d:5, route:'인천 05:35 도착', grade:'low', msg:'이른 새벽 도착이에요. 도착 후 일정은 여유 있게 잡으세요.'}
+      ]}
+  ]
+};
+
+const COMPANIONS = [
+  {key:'family', label:'가족과'}, {key:'parents', label:'부모님과'},
+  {key:'couple', label:'연인과'}, {key:'friends', label:'친구와'},
+  {key:'solo', label:'나홀로'}
+];
+const TAB_ATTRS = {
+  family:  [{k:'hotel',label:'숙소 편의'},{k:'leisure',label:'일정 여유'},{k:'move',label:'이동 부담↓'},{k:'meal',label:'식사 구성'}],
+  parents: [{k:'hotel',label:'숙소 편의'},{k:'meal',label:'식사 구성'},{k:'move',label:'이동 부담↓'},{k:'leisure',label:'일정 여유'}],
+  couple:  [{k:'photo',label:'사진포인트'},{k:'meal',label:'미식 경험'},{k:'hotel',label:'호텔 매력'},{k:'leisure',label:'자유시간'}],
+  friends: [{k:'photo',label:'사진포인트'},{k:'meal',label:'미식 경험'},{k:'leisure',label:'일정 여유'},{k:'cost',label:'비용 부담↓'}],
+  solo:    [{k:'leisure',label:'일정 여유'},{k:'move',label:'이동 부담↓'},{k:'photo',label:'사진포인트'},{k:'cost',label:'비용 부담↓'}]
+};
+const FIT_WEIGHTS = {
+  family:  {hotel:.25, meal:.15, leisure:.20, move:.25, photo:.05, cost:.10},
+  parents: {hotel:.25, meal:.25, leisure:.15, move:.25, photo:.05, cost:.05},
+  couple:  {hotel:.20, meal:.20, leisure:.15, move:.05, photo:.30, cost:.10},
+  friends: {hotel:.10, meal:.20, leisure:.15, move:.05, photo:.30, cost:.20},
+  solo:    {hotel:.10, meal:.10, leisure:.25, move:.15, photo:.20, cost:.20}
+};
+const GRADE_LABEL = {low:'여유', mid:'보통', high:'많음', free:'자유'};
+const GRADE_STEPS = {low:'~8천 보', mid:'8천~1만5천 보', high:'1만5천 보 이상'};
+const FIT_LABEL = s => s>=4.4 ? '잘 맞아요' : s>=3.9 ? '무난해요' : '꼼꼼히 확인해 보세요'; // v2.1 라벨 컷
+
+let comp = 'family', idx = 0;
+/* v2.1: raw 점수(변별·운영용)와 표시 점수(커머스 별점 문법) 분리
+   표시 별점 = 3.0 + raw×2.0 → 범위 3.0~5.0 (0.5 단위) — 약점도 3.0으로 표기 */
+const dispStar = r => Math.min(5, Math.max(3, Math.round((3+r*2)*2)/2));
+const stars = n => Array.from({length:5},(_,i)=> i<Math.floor(n) ? '★' : (i<n ? '<span class="half">★</span>' : '<span class="off">★</span>')).join('');
+/* 종합 FIT: raw = Σ(가중치×속성) + 동행 보정 → 표시 = 3.0 + raw×2.0 (0.1 단위) */
+const fitScore = (a,c,mods) => {
+  const raw = Math.min(1, Math.max(0, Object.keys(FIT_WEIGHTS[c]).reduce((t,k)=>t+a[k]*FIT_WEIGHTS[c][k],0) + (mods?mods[c].v:0)));
+  return Math.min(5, Math.max(3, Math.round((3+raw*2)*10)/10));
+};
+
+function head(c){ return `<div class="card-no">CARD ${c.no}</div><div class="card-title">${c.title}</div><div class="card-sub">${c.sub}</div>`; }
+
+function slideHtml(c){
+  const m = PAYLOAD.meta;
+  switch(c.type){
+    case 'risks':
+      return `<div class="slide">${head(c)}<div class="risk-intro">좋은 점만 모은 게 아니에요. AI가 데이터에서 함께 살펴봤어요.</div>${c.items.map(r=>`<div class="risk-row"><div class="risk-ico">⚠️</div><div class="risk-tx"><div class="risk-t">${r.txt}</div>${r.note?`<div class="risk-n">${r.note}</div>`:''}</div></div>`).join('')}</div>`;
+    case 'qa':
+      return `<div class="slide">${head(c)}${c.items.map(i=>`<div class="qa-item"><div class="qa-q">${i.q}</div><div class="qa-a">${i.a}</div></div>`).join('')}</div>`;
+    case 'main':
+      return `<div class="slide s-main">${head(c)}<div class="hook">${c.hook}</div>
+        <div class="main-box"><div class="main-name">${m.name}</div>
+        <div class="meta-row"><span class="meta-chip brand" style="background:${m.brandColor};border-color:${m.brandColor}">${m.brand}</span><span class="meta-chip">${m.duration}</span><span class="meta-chip">${PAYLOAD.productCode}</span></div>
+        <div class="info-row"><span class="ic">📅</span><span>${m.dates}</span></div>
+        <div class="info-row"><span class="ic">✈️</span><span>${m.flights.out}<br>${m.flights.in}</span></div>
+        <div class="price">${m.price.amount}원~ <small>${m.price.basis}</small></div>
+        ${m.priceNote?`<div class="price-note">! ${m.priceNote}</div>`:''}</div></div>`;
+    case 'highlights':
+      return `<div class="slide">${head(c)}
+        <div class="tag-row">${c.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+        ${c.items.map((h,i)=>`<div class="hl-item"><span class="num">${String(i+1).padStart(2,'0')}</span><div class="hl-body"><span class="hl-label">${h.label}</span><div class="txt">${h.txt}</div></div></div>`).join('')}</div>`;
+    case 'fit':
+      return `<div class="slide" id="fitSlide">${head(c)}<div id="fitBody"></div></div>`;
+    case 'checkpoints':
+      return `<div class="slide">${head(c)}${c.groups.map(g=>`<div class="chk-group"><div class="g-title">${g.title}</div>${g.items.map(i=>`<div class="chk-item ${i.type}"><span class="ico">${i.type==='pos'?'✓':'!'}</span><span>${i.text}</span></div>`).join('')}</div>`).join('')}</div>`;
+    case 'schedule': {
+      const legend = `<div class="free-note"><span class="grade free">자유</span><span>= 종일 자유일정 (별도 색상)</span></div>
+        <div class="legend">${['low','mid','high'].map(g=>`<div class="leg"><span class="grade ${g}">${GRADE_LABEL[g]}</span><div class="steps">${GRADE_STEPS[g]}</div></div>`).join('')}</div>
+        <div class="legend-note">* 일정 구성 기반 추정 기준이에요</div>`;
+      if(c.days.length <= 7){
+        return `<div class="slide">${head(c)}${legend}
+          <div class="day-list">${c.days.map(d=>`<div class="day-row"><div class="day-col"><div class="d">D${d.d}</div><span class="grade ${d.grade}">${GRADE_LABEL[d.grade]}</span></div><div class="day-body"><div class="day-route">${d.route}</div>${d.msg?`<div class="day-msg">· ${d.msg}</div>`:''}</div></div>`).join('')}</div></div>`;
+      }
+      return `<div class="slide">${head(c)}${legend}
+        <div class="hm-bar" id="hmBar"></div>
+        <div class="hm-detail" id="hmDetail"></div>
+        <div class="hm-hint">일차를 탭하면 상세 동선과 팁이 보여요</div></div>`;
+    }
+  }
+}
+
+function endSlide(){
+  return `<div class="slide s-end">
+    <div class="logo"><span class="h">hana</span>tour</div>
+    <div class="slogan">꿈꾸는 대로, 펼쳐지다</div>
+    <div class="notice"><b>H-AI가 상품 데이터를 해석한 참고 정보예요.</b><br>예약 전 상품 상세를 꼭 확인하세요.<br><br>별점·FIT은 상품 데이터 기반 산출값으로<br>개인 만족도와 다를 수 있어요.<br>활동량은 일정 구성 기반 추정이며,<br>호텔·일정·경비는 변경될 수 있어요.<br><br>* 실제 API 캡처 데이터(2026.4.2) 기반 샘플이에요.</div>
+    <a class="cta" href="#" onclick="return false;">상품 상세 보기</a></div>`;
+}
+
+function renderFit(){
+  const c = PAYLOAD.cards.find(x=>x.type==='fit');
+  const m = PAYLOAD.meta;
+  const fit = fitScore(c.attrs01, comp, c.mods);
+  const label = COMPANIONS.find(x=>x.key===comp).label;
+  document.getElementById('fitBody').innerHTML =
+    `<div class="comp-tabs">${COMPANIONS.map(x=>`<button class="${x.key===comp?'on':''}" onclick="setComp('${x.key}')">${x.label}</button>`).join('')}</div>
+     <div class="fit-score"><span class="num">★${fit.toFixed(1)}<small> /5</small></span><span class="lbl">${FIT_LABEL(fit)}</span><span class="cap">${label} 여행 기준<br>종합 FIT</span></div>
+     <div class="star-box">${TAB_ATTRS[comp].map(a=>
+       `<div class="star-row"><span class="attr">${a.label}<button class="info-btn" onclick="toggleTip(event,'${a.k}')">i</button><span class="tip" id="tip-${a.k}">${c.tips[a.k]}</span></span><span class="stars">${stars(dispStar(c.attrs01[a.k]))}</span></div>`).join('')}</div>
+     <div class="fit-comment">${c.comments[comp]}</div>`;
+}
+function setComp(k){ comp=k; renderFit(); }
+
+let dayIdx = 0;
+function renderHm(){
+  const c = PAYLOAD.cards.find(x=>x.type==='schedule');
+  if(!c || c.days.length <= 7) return;
+  const bar = document.getElementById('hmBar');
+  bar.style.gridTemplateColumns = `repeat(${Math.min(c.days.length, 10)}, 1fr)`;
+  bar.innerHTML = c.days.map((d,i)=>
+    `<div class="hm-cell${i===dayIdx?' sel':''}" onclick="setDay(${i})"><div class="blk ${d.grade}">D${d.d}</div></div>`).join('');
+  const d = c.days[dayIdx];
+  document.getElementById('hmDetail').innerHTML =
+    `<div class="hm-day">DAY ${d.d}<span class="grade ${d.grade}">${GRADE_LABEL[d.grade]}</span></div>
+     <div class="hm-route">${d.route}</div>${d.msg?`<div class="hm-msg">· ${d.msg}</div>`:''}`;
+}
+function setDay(i){ dayIdx=i; renderHm(); }
+
+function toggleTip(e,k){
+  e.stopPropagation();
+  document.querySelectorAll('.tip').forEach(t=>{ if(t.id!=='tip-'+k) t.classList.remove('show'); });
+  document.getElementById('tip-'+k).classList.toggle('show');
+}
+document.addEventListener('click', ()=>document.querySelectorAll('.tip').forEach(t=>t.classList.remove('show')));
+
+const vp = document.getElementById('vp');
+const TOTAL = PAYLOAD.cards.length + 1;
+vp.innerHTML = PAYLOAD.cards.map(slideHtml).join('') + endSlide();
+renderFit();
+renderHm();
+document.getElementById('dots').innerHTML = Array.from({length:TOTAL},(_,i)=>`<span class="dot${i===0?' on':''}" onclick="go(${i})"></span>`).join('');
+document.getElementById('counter').textContent = '01 / '+String(TOTAL).padStart(2,'0');
+
+function sync(){
+  document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on', i===idx));
+  document.getElementById('counter').textContent = String(idx+1).padStart(2,'0')+' / '+String(TOTAL).padStart(2,'0');
+}
+function go(i){
+  idx = Math.max(0, Math.min(TOTAL-1, i));
+  vp.scrollTo({left: idx*390, behavior:'smooth'});
+  sync();
+}
+vp.addEventListener('scroll', ()=>{
+  const i = Math.round(vp.scrollLeft/390);
+  if(i!==idx){ idx=i; sync(); }
+});
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight') go(idx+1);
+  if(e.key==='ArrowLeft') go(idx-1);
+});
+</script>
+</body>
+</html>
